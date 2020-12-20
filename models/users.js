@@ -15,10 +15,12 @@ const usersSchema = mongoose.Schema(
             },
             mailID : {
                 type : String,
+                unique: true,
                 required : [true, 'Field Required']
             },
             phoneNumber : {
-                type : Number
+                type : Number,
+                required : [true, 'Field Required']
             },
             bookingID : {
                 type : [String],
