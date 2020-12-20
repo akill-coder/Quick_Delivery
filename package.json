@@ -1,0 +1,31 @@
+{
+  "name": "quick_delivery",
+  "version": "1.0.0",
+  "description": "Quick Delivery is a web application for a package transportation company.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akill-coder/Quick_Delivery.git"
+  },
+  "keywords": [
+    "NodeJs",
+    "Express",
+    "MongoDB"
+  ],
+  "author": "D Akhil Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akill-coder/Quick_Delivery/issues"
+  },
+  "homepage": "https://github.com/akill-coder/Quick_Delivery#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "mongoose": "^5.11.8"
+  }
+}
