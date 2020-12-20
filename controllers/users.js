@@ -7,20 +7,7 @@ exports.register = async (req,res) => {
     try {
 
 
-        if( 
-            req.body.userName.length == 0 ||
-            req.body.passWord.length == 0 ||
-            req.body.mailID.length == 0  ||
-            req.body.phoneNumber.toString().length == 0    
-        ){
-
-            res.status(400).json({
-                status: 'error',
-                msg : 'All Fields Are Required'
-            });        
-
-        }        
-        else if(!validator.validEmailID(req.body.mailID)){
+        if(!validator.validEmailID(req.body.mailID)){
 
            res.status(400).json({
                 status: 'error',
@@ -34,6 +21,15 @@ exports.register = async (req,res) => {
                 status: 'error',
                 msg : 'Enter valid Phone No.'
             });
+
+        }
+        else if(validator.validStrLength(req.body.passWord, 7, 12)){
+
+            res.status(400).json({
+                status: 'error',
+                msg : 'Password length should be in between 7 and 12'
+            });
+
 
         }
         else if( (await usersModel.find({ mailID : req.body.mailID})).length == 1 ){
@@ -74,7 +70,7 @@ exports.register = async (req,res) => {
         
             res.status(404).json({
                 status : 'fail',
-                msg : error
+                msg : error.message
                 
             });
 
@@ -111,6 +107,8 @@ exports.login = async (req,res) => {
         else{
 
             const data = await usersModel.findOne({ mailID : req.body.mailID, passWord : req.body.passWord });
+
+            res.cookie('emailID', req.body.mailID);
 
             res.status(201).json(
                 {

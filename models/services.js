@@ -1,13 +1,16 @@
 const mongoose = require('../dbConfig/mongooseConfig.js');
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const AutoIncrement = AutoIncrementFactory(mongoose);
 
 
 const servicesSchema = mongoose.Schema(
     {
-        serviceId : {
-            type : Number,
-            unique : true,
-            required : [true, 'Required Field']
-        },
+        // serviceId : {
+        //     type : Number,
+        //     unique : true,
+        //     required : [true, 'Required Field']
+        // },
         serviceName : {
             type : String,
             required : [true, 'Required Field']
@@ -34,6 +37,8 @@ const servicesSchema = mongoose.Schema(
     }
 );
 
+
+servicesSchema.plugin(AutoIncrement, {inc_field: 'serviceId'} );
 
 const servicesModel = mongoose.model('scervices', servicesSchema);
 

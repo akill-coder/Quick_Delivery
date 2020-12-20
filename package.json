@@ -24,8 +24,10 @@
   "homepage": "https://github.com/akill-coder/Quick_Delivery#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "mongoose-sequence": "^5.3.0"
   }
 }
