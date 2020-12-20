@@ -6,7 +6,7 @@ exports.serverError = async (err,req,res,next) => {
 };
 
 
-exports.invalidPath = async (err,req,res,next) => {
+exports.invalidPath = async (req,res,next) => {
     res.status(404).json({
         status : 'error',
         msg: 'Invalid Path!'

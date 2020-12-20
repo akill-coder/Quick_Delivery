@@ -6,11 +6,3 @@ exports.validEmailID = (emailID) => {
   
 
 };
-
-
-exports.validPhoneNo = (phoneNo) => {
-
-    if(Math.ceil(Math.log10(phoneNo + 1)) != 10) return false
-
-    return true;
-}

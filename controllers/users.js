@@ -2,7 +2,7 @@ const { json } = require('body-parser');
 const usersModel = require('../models/users.js');
 const validator = require('../utilities/validations.js');
 
-exports.registerUser = async (req,res) => {
+exports.register = async (req,res) => {
 
     try {
 
@@ -10,7 +10,8 @@ exports.registerUser = async (req,res) => {
         if( 
             req.body.userName.length == 0 ||
             req.body.passWord.length == 0 ||
-            req.body.mailID.length == 0                    
+            req.body.mailID.length == 0  ||
+            req.body.phoneNumber.toString().length == 0    
         ){
 
             res.status(400).json({
@@ -27,19 +28,11 @@ exports.registerUser = async (req,res) => {
             });
             
         }
-        else if(!validator.validPhoneNo(req.body.phoneNumber)){
+        else if(req.body.phoneNumber.toString().length != 10){
 
             res.status(400).json({
                 status: 'error',
                 msg : 'Enter valid Phone No.'
-            });
-
-        }
-        else if( (await usersModel.find({userName : req.body.userName})).length == 1 ){
-
-            res.status(400).json({
-                status: 'error',
-                msg : 'Username Already Exists'
             });
 
         }
@@ -86,4 +79,64 @@ exports.registerUser = async (req,res) => {
             });
 
     }
-}
+};
+
+
+exports.login = async (req,res) => {
+
+    try {
+
+
+        if( (await usersModel.find({ mailID : req.body.mailID })).length == 0 ){
+
+
+            res.status(400).json(
+                {
+                    status : 'error',
+                    msg : 'User not registered'
+                }
+            );
+
+        }
+        else if((await usersModel.find({ mailID : req.body.mailID, passWord : req.body.passWord })).length == 0){
+
+            res.status(400).json(
+                {
+                    status : 'error',
+                    msg : 'Password Incorrect'
+                }
+            );
+
+        }
+        else{
+
+            const data = await usersModel.findOne({ mailID : req.body.mailID, passWord : req.body.passWord });
+
+            res.status(201).json(
+                {
+                    status : 'Success',
+                    id : data._id,
+                    msg: 'User Logged In Successfully'
+                }
+            );
+
+
+            
+
+
+        }
+        
+    } catch (error) {
+
+        res.status(404).json({
+            status : 'fail',
+            msg : error
+            
+        });
+
+        
+    }
+
+
+
+};
