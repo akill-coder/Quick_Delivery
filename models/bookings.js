@@ -1,4 +1,8 @@
 const mongoose = require('../dbConfig/mongooseConfig.js');
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const AutoIncrement = AutoIncrementFactory(mongoose);
+
 
 
 const bookingsSchema = mongoose.Schema(
@@ -27,7 +31,7 @@ const bookingsSchema = mongoose.Schema(
             address : {
                 type: String
             },
-            zipcode : {
+            zipCode : {
                 type: String
             },
             city : {
@@ -41,7 +45,7 @@ const bookingsSchema = mongoose.Schema(
             address : {
                 type: String
             },
-            zipcode : {
+            zipCode : {
                 type: String
             },
             city : {
@@ -60,6 +64,9 @@ const bookingsSchema = mongoose.Schema(
     }
 );
 
+
+
+bookingsSchema.plugin(AutoIncrement, {inc_field : 'bookingId'});
 
 const bookingsModel = mongoose.model('bookings', bookingsSchema);
 

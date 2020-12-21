@@ -13,4 +13,7 @@ exports.validStrLength = (str, minLength, maxLength) => {
     if ( str.length > minLength && str.length < maxLength  ) return false;
 
     return true;
-}
+};
+
+
+

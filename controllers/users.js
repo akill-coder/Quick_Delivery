@@ -138,3 +138,104 @@ exports.login = async (req,res) => {
 
 
 };
+
+
+exports.getById = async (req,res) => {
+
+    try {
+
+        
+
+            const data = await usersModel.find( {mailID : req.params.mailId} );
+
+            if(data.length == 1){
+
+                res.status(200).json({
+                    status : 'success',
+                    data : data
+                    
+                }); 
+
+            }
+            else{
+                res.status(400).json({
+                    status : 'error',
+                    msg : 'Please check the mailID'
+                    
+                });
+            }
+
+           
+
+        
+        
+    } catch (error) {
+
+        res.status(404).json({
+            status : 'fail',
+            msg : error
+            
+        });
+        
+    }
+};
+
+exports.update = async (req,res) => {
+
+    try {
+        
+        if(req.body.phoneNumber.toString().length != 10){
+
+            res.status(400).json({
+                status : 'error',
+                msg : 'Phone No. not valid'
+                
+            });
+        }
+        else if((await usersModel.find( {mailID : req.body.mailID} )).length != 1){
+            res.status(400).json({
+                status : 'error',
+                msg : 'Please check the mailID'
+                
+            });
+        }
+        else{
+
+            const data = await usersModel.findOneAndUpdate(
+                { mailID : req.body.mailID},
+                {
+                    $set : {
+                        userName : req.body.userName,
+                        passWord : req.body.passWord,
+                        phoneNumber : req.body.phoneNumber
+                    }
+                },
+                {
+                    new : true,
+                    runValidators : true
+                }
+            );
+
+            console.log(data);
+
+
+            res.status(200).json({
+                status : 'success',
+                msg : 'User Data updated successfully'
+                
+            });
+
+        }
+
+    } catch (error) {
+
+        res.status(404).json({
+            status : 'fail',
+            msg : error
+            
+        });
+        
+        
+    }
+
+}
