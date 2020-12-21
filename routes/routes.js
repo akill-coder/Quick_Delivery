@@ -12,6 +12,7 @@ route.post('/registerUser', controllerUsers.register);
 route.post('/loginUser', controllerUsers.login);
 route.get('/getProfileDetails/:mailId', controllerUsers.getById);
 route.put('/updateUser', controllerUsers.update);
+route.get('/getBookingsUser/:mailId', controllerUsers.getBookings);
 
 // services routes
 route.post('/createService', controllerService.create);

@@ -1,4 +1,5 @@
 const { json } = require('body-parser');
+const bookingsModel = require('../models/bookings.js');
 const usersModel = require('../models/users.js');
 const validator = require('../utilities/validations.js');
 
@@ -238,4 +239,42 @@ exports.update = async (req,res) => {
         
     }
 
+};
+
+
+exports.getBookings = async (req,res) => {
+
+    try {
+
+        const data = await usersModel.findOne( {mailID : req.params.mailId} );
+
+        if(data != null){
+
+            const bookingsData = await bookingsModel.find({ bookingId : {$in : data.bookingID}})
+
+            res.status(200).json({
+                status : 'success',
+                data : bookingsData
+                
+            }); 
+
+        }
+        else{
+            res.status(400).json({
+                status : 'error',
+                msg : 'Please check the mailID'
+                
+            });
+        }
+        
+    } catch (error) {
+
+        res.status(404).json({
+            status : 'fail',
+            msg : error
+            
+        });
+
+        
+    }
 }
