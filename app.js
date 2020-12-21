@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const route = require('./routes/routes.js');
 const errHandler = require('./utilities/errHandlers');
+const logger = require('./utilities/logger.js');
 
 
 const app = express();
@@ -16,7 +17,11 @@ app.use(helmet());
 
 app.use(cookieParser());
 
+app.use(logger.requestLogger);
+
 app.use('/', route);
+
+
 
 
 app.use(errHandler.serverError);

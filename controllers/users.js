@@ -208,7 +208,8 @@ exports.update = async (req,res) => {
                     $set : {
                         userName : req.body.userName,
                         passWord : req.body.passWord,
-                        phoneNumber : req.body.phoneNumber
+                        phoneNumber : req.body.phoneNumber,
+                        updatedAt: Date()
                     }
                 },
                 {
@@ -250,13 +251,28 @@ exports.getBookings = async (req,res) => {
 
         if(data != null){
 
-            const bookingsData = await bookingsModel.find({ bookingId : {$in : data.bookingID}})
+            if(data.bookingID.length == 0){
 
-            res.status(200).json({
-                status : 'success',
-                data : bookingsData
+                res.status(200).json({
+                    status : 'error',
+                    msg: 'No bookings made by the user'
+                    
+                }); 
+
+            }
+            else{ 
+
+                const bookingsData = await bookingsModel.find({ bookingId : {$in : data.bookingID}})
+
                 
-            }); 
+
+                res.status(200).json({
+                    status : 'success',
+                    data : bookingsData
+                    
+                }); 
+
+            }
 
         }
         else{

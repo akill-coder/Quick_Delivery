@@ -171,7 +171,7 @@ exports.update = async (req,res) => {
                     parcelSize : req.body.parcelCharges,
                     discount : req.body.discount,
                     parcelCharges : req.body.parcelCharges,
-                    updateAt : Date()
+                    updatedAt : Date()
                     }
 
                 },
